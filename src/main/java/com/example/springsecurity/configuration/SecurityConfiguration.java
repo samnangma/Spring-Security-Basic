@@ -30,7 +30,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/homepage","/feed")
+                .requestMatchers("/homepage","/feed","/email/**")
                 .permitAll()
                 .requestMatchers("/user/**")
                 .hasRole("USER")

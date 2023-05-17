@@ -17,25 +17,25 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     // set up user credential
-    @Bean
+   /* @Bean
     public InMemoryUserDetailsManager userDetailService(){
-        UserDetails user1 = User.withUsername("james").password("12345").roles("USER").build();
+        UserDetails user1 = User.withUsername("james").password("12345").roles("ADMIN").build();
         UserDetails user2 = User.withUsername("samnang").password("12345").roles("USER").build();
 
         return new InMemoryUserDetailsManager(user1,user2);
-    }
+    }*/
 
     // configuration for the security
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/admin/**")
-                .hasRole("ADMIN")
+                .requestMatchers("/homepage","/feed")
+                .permitAll()
                 .requestMatchers("/user/**")
                 .hasRole("USER")
-                .requestMatchers("/home/**")
-                .anonymous()
+                .requestMatchers("/admin/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,6 +44,23 @@ public class SecurityConfiguration {
         return httpSecurity.build();
     }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+//        httpSecurity.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/admin/**")
+//                .hasRole("ADMIN")
+//                .requestMatchers("/user/**")
+//                .hasRole("USER")
+//                .requestMatchers("/home/**")
+//                .anonymous()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin();
+//
+//        return httpSecurity.build();
+//    }
     // password encode
     @SuppressWarnings("deprecation")
     @Bean
